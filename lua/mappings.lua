@@ -26,8 +26,8 @@ end, { desc = "Show floating diagnostics" })
 map("n", "U", "<C-r>", { noremap = true, silent = true })
 
 -- scrolling
-map("n", "<S-j>", "<C-e>")
-map("n", "<S-k>", "<C-y>")
+map("n", "<C-f>", "<C-e>", { noremap = true, silent = true })
+map("n", "<C-e>", "<C-y>", { noremap = true, silent = true })
 map("n", "{", "}")
 map("n", "}", "{")
 
@@ -56,3 +56,24 @@ map("n", "<leader>wf", ":MoveWord(1)<CR>", opts)
 -- Visual-mode commands
 map("v", "<C-j>", ":MoveBlock(1)<CR>", opts)
 map("v", "<C-k>", ":MoveBlock(-1)<CR>", opts)
+
+-- Folding
+map("n", "<leader>dd", function()
+  if vim.opt.foldmethod:get() == "manual" then
+    vim.opt.foldmethod = "indent"
+    vim.cmd "normal! zM"
+    print "Foldmethod 'indent'"
+  else
+    vim.opt.foldmethod = "manual"
+    vim.cmd "normal! zR"
+    print "Foldmethod 'manual'"
+  end
+end, { desc = "Toggle fold method" })
+map("n", "<leader>o", "za", { silent = true })
+map("n", "<leader>O", "zA", { silent = true })
+
+-- Close all buffers
+map("n", "<leader>bd", ":%bd<CR>", { desc = "Clear all buffers" })
+
+-- Telescope
+map("n", "<leader>fl", require("telescope.builtin").resume, { desc = "telescope redo last search" })

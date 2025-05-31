@@ -64,30 +64,13 @@ return {
     },
 
     {
-      "catgoose/vue-goto-definition.nvim",
-      event = "BufReadPre",
+      -- testing custom nuxt-goto plugin
+      "erlestor/nuxt-goto.nvim",
+      branch = "monorepo-support",
+      ft = "vue",
+      event = "BufEnter",
       opts = {
-        filters = {
-          auto_imports = true,
-          auto_components = true,
-          import_same_file = true,
-          declaration = true,
-          duplicate_filename = true,
-        },
-        filetypes = { "vue", "typescript" },
-        detection = {
-          nuxt = function()
-            return vim.fn.glob ".nuxt/" ~= ""
-          end,
-          vue3 = function()
-            return vim.fn.filereadable "vite.config.ts" == 1 or vim.fn.filereadable "src/App.vue" == 1
-          end,
-          priority = { "nuxt", "vue3" },
-        },
-        lsp = {
-          override_definition = true, -- override vim.lsp.buf.definition
-        },
-        debounce = 200,
+        check_directories = { "/apps/web" },
       },
     },
 
@@ -97,9 +80,14 @@ return {
       -- tag = "v2.15", -- uncomment to pin to a specific release
       init = function()
         -- VimTeX configuration goes here, e.g.
-        vim.g.vimtex_view_method = "mupdf"
+        vim.g.vimtex_view_method = "skim"
+        vim.g.vimtex_quickfix_autoclose_ufter_keystrokes = 1
         vim.g.vimtex_compiler_latexmk = {
           out_dir = "out",
+        }
+        vim.g.vimtex_quickfix_ignore_filters = {
+          "Underfull",
+          "Overfull",
         }
       end,
     },
@@ -122,5 +110,45 @@ return {
     opts = {
       --- Config
     },
+  },
+  {
+    "javiorfo/nvim-soil",
+
+    -- Optional for puml syntax highlighting:
+    dependencies = { "javiorfo/nvim-nyctophilia" },
+
+    lazy = true,
+    ft = "plantuml",
+    opts = {
+      -- If you want to change default configurations
+
+      -- This option closes the image viewer and reopen the image generated
+      -- When true this offers some kind of online updating (like plantuml web server)
+      actions = {
+        redraw = false,
+      },
+
+      -- If you want to use Plant UML jar version instead of the installed version
+      puml_jar = "/usr/local/plantuml/plantuml-1.2025.0.jar",
+
+      -- If you want to customize the image showed when running this plugin
+      image = {
+        darkmode = false, -- Enable or disable darkmode
+        format = "svg", -- Choose between png or svg
+        -- This is a default implementation of using nsxiv to open the resultant image
+        -- Edit the string to use your preferred app to open the image (as if it were a command line)
+        -- Some examples:
+        -- return "feh " .. img
+        -- return "xdg-open " .. img
+        -- return "feh " .. img .. " --reload 5"
+        execute_to_open = function(img)
+          return "open " .. img
+        end,
+      },
+    },
+  },
+
+  {
+    "evesdropper/luasnip-latex-snippets.nvim",
   },
 }
