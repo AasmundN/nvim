@@ -35,3 +35,13 @@ require "nvchad.autocmds"
 vim.schedule(function()
   require "mappings"
 end)
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function()
+    vim.diagnostic.config {
+      virtual_text = { severity = { min = vim.diagnostic.severity.ERROR } },
+      signs = { severity = { min = vim.diagnostic.severity.ERROR } },
+      update_in_insert = false,
+    }
+  end,
+})
