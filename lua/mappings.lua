@@ -77,3 +77,9 @@ map("n", "<leader>bd", ":%bd<CR>", { desc = "Clear all buffers" })
 
 -- Telescope
 map("n", "<leader>fl", require("telescope.builtin").resume, { desc = "telescope redo last search" })
+
+-- Tabs
+map("n", "N", ":tabnext<CR>", opts)
+map("n", "P", ":tabprev<CR>", opts)
+map("n", "<leader>n", ":tabnew<CR>", opts)
+map("n", "<leader>N", ":tabclose<CR>", opts
