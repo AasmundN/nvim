@@ -42,6 +42,7 @@ return {
       opts = {
         view = {
           adaptive_size = true,
+          number = true,
         },
       },
     },
